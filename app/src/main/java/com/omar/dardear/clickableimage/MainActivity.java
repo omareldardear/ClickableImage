@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -30,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
             {
                 //if(event.getAction()==MotionEvent.ACTION_UP)
                 // {
-                int imageId = getImageId((int)event.getX(), (int)event.getY());
+                int imageId = getImageId((int)event.getX(), (int)event.getY(),0);
                 if (imageId >= 0)
                     Toast.makeText(getApplicationContext(), "pressed ", Toast.LENGTH_SHORT).show();
                 return false;
@@ -47,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event)
             {
 
-                int imageId = getImageId1((int)event.getX(), (int)event.getY());
+                int imageId = getImageId((int)event.getX(), (int)event.getY(),1);
                 if (imageId >= 0)
                     Toast.makeText(getApplicationContext(), "Events ", Toast.LENGTH_SHORT).show();
                 return false;
@@ -63,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event)
             {
 
-                int imageId = getImageId2((int)event.getX(), (int)event.getY());
+                int imageId = getImageId((int)event.getX(), (int)event.getY(),2);
                 if (imageId >= 0)
                     Toast.makeText(getApplicationContext(), "News", Toast.LENGTH_SHORT).show();
                 return false;
@@ -78,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event)
             {
 
-                int imageId = getImageId3((int)event.getX(), (int)event.getY());
+                int imageId = getImageId((int)event.getX(), (int)event.getY(),3);
                 if (imageId >= 0)
                     Toast.makeText(getApplicationContext(), "Services", Toast.LENGTH_SHORT).show();
                 return false;
@@ -93,9 +95,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    private int getImageId(int x, int y)
+
+
+    private int getImageId(int x, int y,int slct)
     {
-        ViewGroup parent = (ViewGroup) findViewById(R.id.Frame);
+       ArrayList<ViewGroup> grp=new ArrayList<ViewGroup>();
+        grp.add((ViewGroup) findViewById(R.id.Frame));
+        grp.add((ViewGroup) findViewById(R.id.Frame1));
+        grp.add((ViewGroup) findViewById(R.id.Frame2));
+       grp.add((ViewGroup) findViewById(R.id.Frame3));
+
+        ViewGroup parent = grp.get(slct);
         for (int a = parent.getChildCount()-1; a >= 0; a--)
         {
             if (parent.getChildAt(a) instanceof ImageView)
@@ -106,61 +116,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    private int getImageId1(int x, int y)
-    {
-//        ArrayList<ViewGroup> grp=new ArrayList<ViewGroup>();
-//        grp.add((ViewGroup) findViewById(R.id.Frame0));
-//        grp.add((ViewGroup) findViewById(R.id.Frame1));
-//        grp.add((ViewGroup) findViewById(R.id.Frame2));
-//        grp.add((ViewGroup) findViewById(R.id.Frame3));
-
-        ViewGroup parent = (ViewGroup) findViewById(R.id.Frame1);
-       
-        for (int a = parent.getChildCount()-1; a >= 0; a--)
-        {
-
-            if (parent.getChildAt(a) instanceof ImageView)
-                if (!checkPixelTransparent((ImageView)parent.getChildAt(a), x, y))
-                    return parent.getChildAt(a).getId();
-        }
-        return -1;
-    }
-
-    private int getImageId2(int x, int y)
-    {
-//        ArrayList<ViewGroup> grp=new ArrayList<ViewGroup>();
-//        grp.add((ViewGroup) findViewById(R.id.Frame0));
-//        grp.add((ViewGroup) findViewById(R.id.Frame1));
-//        grp.add((ViewGroup) findViewById(R.id.Frame2));
-//        grp.add((ViewGroup) findViewById(R.id.Frame3));
-
-        ViewGroup parent = (ViewGroup) findViewById(R.id.Frame2);
-        for (int a = parent.getChildCount()-1; a >= 0; a--)
-        {
-            if (parent.getChildAt(a) instanceof ImageView)
-                if (!checkPixelTransparent((ImageView)parent.getChildAt(a), x, y))
-                    return parent.getChildAt(a).getId();
-        }
-        return -1;
-    }
-
-    private int getImageId3(int x, int y)
-    {
-//        ArrayList<ViewGroup> grp=new ArrayList<ViewGroup>();
-//        grp.add((ViewGroup) findViewById(R.id.Frame0));
-//        grp.add((ViewGroup) findViewById(R.id.Frame1));
-//        grp.add((ViewGroup) findViewById(R.id.Frame2));
-//        grp.add((ViewGroup) findViewById(R.id.Frame3));
-
-        ViewGroup parent = (ViewGroup) findViewById(R.id.Frame3);
-        for (int a = parent.getChildCount()-1; a >= 0; a--)
-        {
-            if (parent.getChildAt(a) instanceof ImageView)
-                if (!checkPixelTransparent((ImageView)parent.getChildAt(a), x, y))
-                    return parent.getChildAt(a).getId();
-        }
-        return -1;
-    }
 
     private boolean checkPixelTransparent(ImageView iv, int x, int y)
     {
